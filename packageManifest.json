@@ -1,0 +1,29 @@
+{
+  "packageName": "SONOFF ORB SNZB-01M Driver + Mapper App",
+  "author": "Gerard",
+  "version": "1.0.0",
+  "minimumHEVersion": "2.3.0",
+  "dateReleased": "2026-03-11",
+  "licenseFile": "https://raw.githubusercontent.com/REPLACE_ME/REPLACE_ME/main/LICENSE",
+  "documentationLink": "https://raw.githubusercontent.com/REPLACE_ME/REPLACE_ME/main/README.md",
+  "communityLink": "",
+  "releaseNotes": "Initial release: custom SNZB-01M driver, mapper app, and Rule Machine blueprint.",
+  "drivers": [
+    {
+      "id": "sonoff-orb-snzb-01m-driver",
+      "name": "SONOFF ORB SNZB-01M Button",
+      "namespace": "gerard",
+      "location": "https://raw.githubusercontent.com/REPLACE_ME/REPLACE_ME/main/drivers/SonoffOrbSNZB01M.groovy",
+      "required": true
+    }
+  ],
+  "apps": [
+    {
+      "id": "sonoff-orb-snzb-01m-mapper-app",
+      "name": "SONOFF ORB Button Mapper",
+      "namespace": "gerard",
+      "location": "https://raw.githubusercontent.com/REPLACE_ME/REPLACE_ME/main/apps/SonoffOrbButtonMapper.groovy",
+      "required": false
+    }
+  ]
+}
