@@ -1,3 +1,23 @@
+## Custom Attributes for Advanced Automations
+
+The driver exposes several custom attributes for advanced diagnostics and automation:
+
+- `lastAction` — Human-readable last gesture (e.g., "button 2 triple-pushed").
+- `identifyCluster` — Last Identify cluster (0x0003) message received. Useful for troubleshooting or triggering automations when the device is identified.
+- `manufacturerAttr0000` — Last value of manufacturer-specific attribute 0x0000 from cluster FC12. Can be used for custom automations or debugging device-specific features.
+
+### Example: Using Custom Attributes in Rule Machine
+
+You can use these attributes as triggers or conditions in Rule Machine or other Hubitat apps. For example, to trigger an automation when the device sends an Identify cluster message:
+
+1. In Rule Machine, create a new rule.
+2. For the trigger, select **Custom Attribute**.
+3. Choose your SNZB-01M device and select `identifyCluster`.
+4. Set the condition (e.g., "changes" or "contains").
+5. Define the actions you want to run.
+
+Similarly, you can use `manufacturerAttr0000` to trigger or conditionally run automations based on manufacturer-specific messages.
+
 # Hubitat SONOFF ORB SNZB-01M Driver
 
 Custom Hubitat integration project for the SONOFF ORB 4-in-1 Zigbee Smart Scene Button (`SNZB-01M`).

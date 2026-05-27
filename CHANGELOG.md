@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.0.1] - 2026-05-27
+### Added
+- Exposed new custom attributes `identifyCluster` (last Identify cluster message) and `manufacturerAttr0000` (last manufacturer-specific attribute 0x0000 value) in the driver for advanced diagnostics and automations.
+
 ## [1.0.0] - 2026-03-11
 
 ### Added

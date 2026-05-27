@@ -29,6 +29,8 @@
  *                              detect triple-tap (see TRIPLE TAP below).
  *     driverVersion (string) - version string from DRIVER_VERSION constant.
  *     driverDate    (string) - release date from DRIVER_DATE constant.
+ *     identifyCluster (string) - last Identify cluster message received (0x0003), for advanced diagnostics or automations.
+ *     manufacturerAttr0000 (string) - last value of manufacturer-specific attribute 0x0000 from cluster FC12, for custom automations or debugging.
  *
  * ZIGBEE PROTOCOL
  *   Cluster 0x0001 (Power Configuration)
@@ -81,6 +83,8 @@ metadata {
         attribute "lastAction", "string"
         attribute "driverVersion", "string"
         attribute "driverDate", "string"
+        attribute "identifyCluster", "string" // Last Identify cluster message
+        attribute "manufacturerAttr0000", "string" // Last manufacturer-specific attr 0x0000 value
 
         fingerprint profileId: "0104",
             inClusters: "0000,0001,0003,0020,FC12",
@@ -151,6 +155,28 @@ void parse(String description) {
 
     if (descMap.clusterInt == 0xFC12 && descMap.command == "0A") {
         handleButton(descMap)
+        return
+    }
+
+    // Handle Identify cluster (0x0003)
+    if (descMap.clusterInt == 0x0003) {
+        def msg = "${device.displayName}: Identify cluster message received"
+        log.info msg
+        sendEvent(name: "identifyCluster", value: msg)
+        return
+    }
+
+    // Handle manufacturer-specific attribute (FC12, attrId 0x0000)
+    if (descMap.clusterInt == 0xFC12 && descMap.attrInt == 0x0000) {
+        def val = descMap.valueParsed ?: descMap.value
+        log.info "${device.displayName}: Manufacturer attribute 0x0000 value: ${val}"
+        sendEvent(name: "manufacturerAttr0000", value: val)
+        return
+    }
+
+    // Optionally suppress or log other unhandled events
+    if (enableDebug) {
+        log.warn "${device.displayName}: Unhandled Zigbee event: ${description}"
     }
 }
 

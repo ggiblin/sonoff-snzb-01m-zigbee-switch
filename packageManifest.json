@@ -1,13 +1,13 @@
 {
   "packageName": "SONOFF ORB SNZB-01M Driver + Mapper App",
   "author": "Gerard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minimumHEVersion": "2.3.0",
-  "dateReleased": "2026-03-11",
+  "dateReleased": "2026-05-27",
   "licenseFile": "https://raw.githubusercontent.com/REPLACE_ME/REPLACE_ME/main/LICENSE",
   "documentationLink": "https://raw.githubusercontent.com/REPLACE_ME/REPLACE_ME/main/README.md",
   "communityLink": "",
-  "releaseNotes": "Initial release: custom SNZB-01M driver, mapper app, and Rule Machine blueprint.",
+  "releaseNotes": "Added custom attributes: identifyCluster (last Identify cluster message) and manufacturerAttr0000 (last manufacturer-specific attribute 0x0000 value) for advanced diagnostics and automations.",
   "drivers": [
     {
       "id": "sonoff-orb-snzb-01m-driver",
