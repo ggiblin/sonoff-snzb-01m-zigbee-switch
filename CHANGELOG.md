@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project follows Semantic Versioning.
 
+## [1.0.2] - 2026-05-30
+### Changed
+- Enhanced debug logging in the driver (`SonoffOrbSNZB01M.groovy`):
+	- Now logs all incoming Zigbee messages to `parse()`
+	- Logs when `handleButton()` is called and its input
+	- Logs event details before sending events
+	- Additional debug output for null/unknown actions
+
 ## [1.0.1] - 2026-05-27
 ### Added
 - Exposed new custom attributes `identifyCluster` (last Identify cluster message) and `manufacturerAttr0000` (last manufacturer-specific attribute 0x0000 value) in the driver for advanced diagnostics and automations.

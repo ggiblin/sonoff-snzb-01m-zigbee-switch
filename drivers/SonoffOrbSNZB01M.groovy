@@ -141,11 +141,19 @@ void configure() {
 // or handleButton() for cluster 0xFC12 command 0x0A (button gestures).
 // All other clusters are silently ignored.
 void parse(String description) {
-    Map descMap = zigbee.parseDescriptionAsMap(description)
-    if (!descMap) return
 
     if (enableDebug) {
-        log.debug "${device.displayName}: parsed ${descMap}"
+        log.debug "${device.displayName}: parse() called with description: ${description}"
+    }
+    Map descMap = zigbee.parseDescriptionAsMap(description)
+    if (!descMap) {
+        if (enableDebug) {
+            log.debug "${device.displayName}: zigbee.parseDescriptionAsMap returned null for: ${description}"
+        }
+        return
+    }
+    if (enableDebug) {
+        log.debug "${device.displayName}: parsed descMap: ${descMap}"
     }
 
     if (descMap.clusterInt == 0x0001) {
@@ -230,9 +238,17 @@ private Integer voltageToPercent(BigDecimal volts) {
 // isStateChange: true is set unconditionally so repeated presses of the
 // same button always fire an event even if the value has not changed.
 private void handleButton(Map descMap) {
+    if (enableDebug) {
+        log.debug "${device.displayName}: handleButton() called with descMap: ${descMap}"
+    }
     Integer button = (descMap.endpoint != null) ? Integer.parseInt(descMap.endpoint, 16) : 1
     Integer action = (descMap.value != null) ? Integer.parseInt(descMap.value, 16) : null
-    if (action == null) return
+    if (action == null) {
+        if (enableDebug) {
+            log.debug "${device.displayName}: handleButton: action is null, descMap: ${descMap}"
+        }
+        return
+    }
 
     Map evt = [value: button, isStateChange: true]
     String actionText
@@ -262,12 +278,16 @@ private void handleButton(Map descMap) {
             break
         default:
             if (enableDebug) {
-                log.warn "${device.displayName}: unknown action ${action} from endpoint ${button}"
+                log.warn "${device.displayName}: unknown action ${action} from endpoint ${button}, descMap: ${descMap}"
             }
             return
     }
 
     evt.descriptionText = "${device.displayName} ${actionText}"
+    if (enableDebug) {
+        log.debug "${device.displayName}: About to send lastAction event: ${actionText}"
+        log.debug "${device.displayName}: About to send event: ${evt}"
+    }
     sendEvent(name: "lastAction", value: actionText)
     sendEvent(evt)
 
